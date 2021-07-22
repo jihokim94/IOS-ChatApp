@@ -9,21 +9,17 @@ import UIKit
 
 class DetailViewController: UIViewController {
 
-   
-    
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var bountyLabel: UILabel!
     
-    
+    let viewModel = DetailViewModel()
     
     @IBAction func closeModal(_ sender: Any) {
         // 현재 모달창 끄기
         dismiss(animated: true, completion: nil)
     }
-    
-    var name : String?
-    var bounty: Int?
+ 
     override func viewDidLoad() {
         super.viewDidLoad()
         updateUI()
@@ -31,20 +27,20 @@ class DetailViewController: UIViewController {
     }
     
     func updateUI()  {
-        if let name = self.name , let bounty = self.bounty {
-            let img = UIImage(named: name)
+        if let bountyInfo = self.viewModel.bountyInfo {
+            let img = UIImage(named: bountyInfo.name)
             imageView.image = img
-            nameLabel.text = name
-            bountyLabel.text = String(bounty)
+            nameLabel.text = bountyInfo.name
+            bountyLabel.text = String(bountyInfo.bounty)
         }
-        
     }
 
-   
-     //MARK: - Navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+}
 
-    }
+class DetailViewModel {
+    var bountyInfo : BountyInfo?
     
-
+    func update(model : BountyInfo?)  {
+       bountyInfo = model
+    }
 }
